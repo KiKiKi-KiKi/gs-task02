@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import AppContext from '../contexts/AppContext';
 import { CREATE_ITEM } from '../actions';
 import { getToday, isPastDate } from '../utils';
@@ -9,11 +9,6 @@ export default function AddItemForm() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [due, setDue] = useState(today);
-  const [disabled, setDisabled] = useState(true);
-
-  const onValidate = useCallback((title) => {
-    setDisabled(() => !(title && title.trim()));
-  }, []);
 
   const onChange = useCallback(
     (callback) => (e) => {
@@ -49,14 +44,12 @@ export default function AddItemForm() {
     resetForm();
   };
 
-  useEffect(() => {
-    onValidate(title);
-  }, [title, onValidate]);
+  const disabled = !(title && title.trim());
 
   return (
     <form>
       <div className="form-group">
-        <label htmlFor="todo-due">Time limit</label>
+        <label htmlFor="todo-due">Due date</label>
         <div className="d-inline ml-2">
           <input
             type="date"
