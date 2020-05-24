@@ -48,9 +48,11 @@ export default function AddItemForm() {
 
   return (
     <form>
-      <div className="form-group">
-        <label htmlFor="todo-due">Due date</label>
-        <div className="d-inline ml-2">
+      <div className="form-group row">
+        <label className="col-sm-2 col-form-label" htmlFor="todo-due">
+          Due date
+        </label>
+        <div className="col-sm-10">
           <input
             type="date"
             id="todo-due"
@@ -59,25 +61,33 @@ export default function AddItemForm() {
           />
         </div>
       </div>
-      <div className="form-group">
-        <label htmlFor="todo-title">Title</label>
-        <input
-          type="text"
-          id="todo-title"
-          className="form-control"
-          placeholder="Todo Title"
-          value={title}
-          onChange={onChange(setTitle)}
-        />
+      <div className="form-group row">
+        <label className="col-sm-2 col-form-label" htmlFor="todo-title">
+          Title
+        </label>
+        <div className="col-sm-10">
+          <input
+            type="text"
+            id="todo-title"
+            className="form-control"
+            placeholder="Todo Title"
+            value={title}
+            onChange={onChange(setTitle)}
+          />
+        </div>
       </div>
-      <div className="form-group">
-        <label htmlFor="todo-body">Body</label>
-        <textarea
-          id="todo-body"
-          className="form-control"
-          value={body}
-          onChange={onChange(setBody)}
-        />
+      <div className="form-group row">
+        <label className="col-sm-2 col-form-label" htmlFor="todo-body">
+          Body
+        </label>
+        <div className="col-sm-10">
+          <textarea
+            id="todo-body"
+            className="form-control"
+            value={body}
+            onChange={onChange(setBody)}
+          />
+        </div>
       </div>
       {/*
       <div className="form-group">
@@ -93,7 +103,7 @@ export default function AddItemForm() {
        */}
       <button
         type="submit"
-        className="btn btn-primary"
+        className="btn btn-primary add-todo-btn"
         onClick={onSubmit}
         disabled={disabled}
       >

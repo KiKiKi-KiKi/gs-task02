@@ -12,3 +12,23 @@
     z-index: 0;
   }
 }
+
+.add-todo-form {
+  margin: 1rem 0;
+  padding: 1em 1em 1.5em;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.add-todo-btn {
+  display: block;
+  margin-left: auto;
+  min-width: 280px;
+}
+
+.toto-body {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 14em;
+  overflow: hidden;
+}

@@ -19,7 +19,7 @@ export default function DeleteDoneItemsButton() {
 
   return (
     <button
-      className="btn btn-danger"
+      className="btn btn-danger btn-sm"
       onClick={onClearItem}
       disabled={!hasItem}
     >

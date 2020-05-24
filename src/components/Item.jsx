@@ -18,9 +18,11 @@ const TodoItem = ({
         {index}
         <span className="d-none">{id}</span>
       </td>
-      <td className={expired ? 'text-danger' : ''}>{due}</td>
+      <td className={expired ? 'text-danger' : ''}>
+        <small>{due}</small>
+      </td>
       <td>
-        <a href="#" onClick={onEdit}>
+        <a href="#" className="todo-container" onClick={onEdit}>
           <b className="todo-title">{title}</b>
           <div className="toto-body">{body}</div>
         </a>
@@ -44,10 +46,14 @@ const DoneItem = ({ index, id, title, body, updatedAt, onChange }) => {
         {index}
         <span className="d-none">{id}</span>
       </td>
-      <td>{formatDate(updatedAt, 'YYYY-MM-DD hh:mm:ss')}</td>
+      <td className="text-success">
+        <small>{formatDate(updatedAt, 'YYYY-MM-DD hh:mm:ss')}</small>
+      </td>
       <td>
-        <b className="todo-title">{title}</b>
-        <div className="toto-body">{body}</div>
+        <div className="todo-container small">
+          <b className="todo-title">{title}</b>
+          <div className="toto-body">{body}</div>
+        </div>
       </td>
       <td>
         <button className="btn btn-warning btn-sm" onClick={onChange}>

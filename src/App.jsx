@@ -78,11 +78,12 @@ export default function App() {
           </header>
           <div className="main">
             <TodoList />
-            <hr />
-            <AddItemForm />
-            <hr />
+            <div className="add-todo-form bg-light">
+              <h5>Add TODO</h5>
+              <AddItemForm />
+            </div>
             <header className="navbar">
-              <h3>COMPLETED</h3>
+              <h4>COMPLETED</h4>
               <div className="ml-md-auto">
                 <DeleteDoneItemsButton />
               </div>
