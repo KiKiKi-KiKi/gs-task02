@@ -22,6 +22,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         todo: { ...todo, [id]: { ...action.item, id, createdAt } },
+        status: 'create item',
       };
     }
     case UPDATE_ITEM: {
@@ -33,10 +34,11 @@ export default (state = INITIAL_STATE, action) => {
       /* eslint-disable no-empty-pattern */
       const todo = (({ [deleteID]: { } = {}, ...data }) => data)(state.todo);
       /* eslint-enable no-empty-pattern */
-      return { ...state, todo };
+      return { ...state, todo, status: 'delete item' };
     }
     case DELETE_ALL_ITEM: {
-      return { ...state, todo: {} };
+      console.log('DELETE_ALL_ITEM');
+      return { ...state, todo: {}, status: 'destroy' };
     }
     default: {
       return state;
