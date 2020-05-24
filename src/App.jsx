@@ -10,6 +10,7 @@ import ClearStorageButton from './components/ClearStorageButton';
 import AddItemForm from './components/AddItemForm';
 import ItemsList from './components/ItemsList';
 import DoneItemList from './components/DoneItemList';
+import DeleteDoneItemsButton from './components/DeleteDoneItemsButton';
 
 export default function App() {
   const savedState = getLocalStorageData();
@@ -43,7 +44,12 @@ export default function App() {
             <hr />
             <AddItemForm />
             <hr />
-            <h3>COMPLETED</h3>
+            <header className="navbar">
+              <h3>COMPLETED</h3>
+              <div className="ml-md-auto">
+                <DeleteDoneItemsButton />
+              </div>
+            </header>
             <DoneItemList />
           </div>
         </AppContext.Provider>

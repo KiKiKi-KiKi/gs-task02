@@ -2,6 +2,7 @@ import { timeCurrentIso8601 } from '../utils';
 import {
   CREATE_ITEM,
   DELETE_ITEM,
+  DELETE_DONE_ITEMS,
   ITEM_COMPLETE,
   ITEM_INCOMPLETE,
   DELETE_ALL_ITEM,
@@ -81,6 +82,10 @@ export default (state = INITIAL_STATE, action) => {
       /* eslint-enable no-empty-pattern */
 
       return { ...state, todo, status: 'delete item' };
+    }
+    case DELETE_DONE_ITEMS: {
+      console.log('DELETE_DONE_ITEMS');
+      return { ...state, done: {} };
     }
     case DELETE_ALL_ITEM: {
       console.log('DELETE_ALL_ITEM');
