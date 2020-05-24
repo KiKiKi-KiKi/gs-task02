@@ -1,10 +1,12 @@
-import { timeCurrentIso8601 } from '../utils';
+import { timeCurrentIso8601, getToday, isPastDate } from '../utils';
 import {
   CREATE_ITEM,
   DELETE_ITEM,
   DELETE_DONE_ITEMS,
   ITEM_COMPLETE,
   ITEM_INCOMPLETE,
+  EXPORED_ITEM_COMPLETE,
+  DELET_EXPIRED_ITEM,
   DELETE_ALL_ITEM,
 } from '../actions';
 
@@ -58,18 +60,57 @@ export default (state = INITIAL_STATE, action) => {
         status: 'item compoete',
       };
     }
-    case ITEM_INCOMPLETE: {
-      console.log('ITEM_COMPLETE', action.id);
-      const { [action.id]: item, ...done } = state.done;
+    case EXPORED_ITEM_COMPLETE: {
+      console.log('EXPORED_ITEM_COMPLETE', action.id);
+      const id = action.id;
+      const { [id]: item, ...expired } = state.expired;
+      const done = state.done;
+
       return {
         ...state,
-        todo: {
-          ...state.todo,
-          [item.id]: {
+        expired,
+        done: {
+          ...done,
+          [id]: {
             ...item,
             status: action.complete,
             updatedAt: timeCurrentIso8601(),
           },
+        },
+        status: 'item compoete',
+      };
+    }
+    case ITEM_INCOMPLETE: {
+      console.log('ITEM_COMPLETE', action.id);
+      const { [action.id]: item, ...done } = state.done;
+      const incompletItem = {
+        ...item,
+        status: action.complete,
+        updatedAt: timeCurrentIso8601(),
+        expired: false,
+      };
+
+      // check due date
+      if (isPastDate(getToday())(item.due)) {
+        return {
+          ...state,
+          expired: {
+            ...state.expired,
+            [item.id]: {
+              ...incompletItem,
+              expired: true,
+            },
+          },
+          done,
+          status: 'item incomplete',
+        };
+      }
+
+      return {
+        ...state,
+        todo: {
+          ...state.todo,
+          [item.id]: incompletItem,
         },
         done,
         status: 'item incomplete',
@@ -83,6 +124,17 @@ export default (state = INITIAL_STATE, action) => {
       /* eslint-enable no-empty-pattern */
 
       return { ...state, todo, status: 'delete item' };
+    }
+    case DELET_EXPIRED_ITEM: {
+      console.log('DELET_EXPIRED_ITEM', action.id);
+      const deleteID = action.id;
+      /* eslint-disable no-empty-pattern */
+      const expired = (({ [deleteID]: {} = {}, ...data }) => data)(
+        state.expired,
+      );
+      /* eslint-enable no-empty-pattern */
+
+      return { ...state, expired, status: 'delete item' };
     }
     case DELETE_DONE_ITEMS: {
       console.log('DELETE_DONE_ITEMS');

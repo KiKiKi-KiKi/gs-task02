@@ -27,7 +27,7 @@ const mapState = ({ todo, done, expired }) => {
           todo: data.todo,
           expired: {
             ...data.expired,
-            [id]: { ...item },
+            [id]: { ...item, expired: true },
           },
         };
       }

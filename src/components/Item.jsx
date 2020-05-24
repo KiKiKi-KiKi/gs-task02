@@ -1,14 +1,23 @@
 import React from 'react';
 import { formatDate } from '../utils';
 
-const TodoItem = ({ index, id, title, body, due, onChange, onDelete }) => {
+const TodoItem = ({
+  index,
+  id,
+  title,
+  body,
+  due,
+  expired,
+  onChange,
+  onDelete,
+}) => {
   return (
     <tr>
       <td>
         {index}
         <span className="d-none">{id}</span>
       </td>
-      <td>{due}</td>
+      <td className={expired ? 'text-danger' : ''}>{due}</td>
       <td>
         <b className="todo-title">{title}</b>
         <div className="toto-body">{body}</div>
