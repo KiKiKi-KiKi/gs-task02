@@ -1,6 +1,6 @@
 import React, { useContext, useCallback } from 'react';
 import AppContext from '../contexts/AppContext';
-import { DELETE_ITEM } from '../actions';
+import { CHANGE_ITEM_STATUS, DELETE_ITEM } from '../actions';
 import Item from './Item';
 
 export default function ItemsList() {
@@ -21,6 +21,15 @@ export default function ItemsList() {
     [dispatch],
   );
 
+  const onChangeStateus = useCallback(
+    ({ id, status }) => (e) => {
+      e.preventDefault();
+
+      dispatch({ type: CHANGE_ITEM_STATUS, id, complete: !status });
+    },
+    [dispatch],
+  );
+
   const todoList = Object.keys(todo).map((id, i) => {
     const item = todo[id];
     const index = i + 1;
@@ -28,6 +37,7 @@ export default function ItemsList() {
       <Item
         key={id}
         index={index}
+        onChange={onChangeStateus(item)}
         onDelete={onDelete({ index, ...item })}
         {...item}
       />

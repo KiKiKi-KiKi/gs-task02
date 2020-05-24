@@ -1,6 +1,34 @@
 import React from 'react';
 
-export default function Item({ index, id, thumb, title, body, onDelete }) {
+const IncompleteBtn = ({ onChange }) => {
+  return (
+    <button className="btn btn-warning btn-sm" onClick={onChange}>
+      INCOMPLETE
+    </button>
+  );
+};
+
+const CompleteBtn = ({ onChange }) => {
+  return (
+    <button className="btn btn-success btn-sm" onClick={onChange}>
+      DONE
+    </button>
+  );
+};
+
+export default function Item({
+  index,
+  id,
+  thumb,
+  title,
+  body,
+  status,
+  onChange,
+  onDelete,
+}) {
+
+  const completeBtn = status ? <IncompleteBtn onChange={onChange} /> : <CompleteBtn onChange={onChange} />
+
   return (
     <tr>
       <td>
@@ -13,7 +41,8 @@ export default function Item({ index, id, thumb, title, body, onDelete }) {
         <div className="toto-body">{body}</div>
       </td>
       <td>
-        <button className="btn btn-danger btn-sm" onClick={onDelete}>
+        {completeBtn}
+        <button className="btn btn-danger btn-sm ml-1" onClick={onDelete}>
           DELETE
         </button>
       </td>

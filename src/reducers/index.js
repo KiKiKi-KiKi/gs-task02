@@ -1,7 +1,7 @@
 import { timeCurrentIso8601 } from '../utils';
 import {
   CREATE_ITEM,
-  UPDATE_ITEM,
+  CHANGE_ITEM_STATUS,
   DELETE_ITEM,
   DELETE_ALL_ITEM,
 } from '../actions';
@@ -19,14 +19,36 @@ export default (state = INITIAL_STATE, action) => {
       const todo = state.todo;
       const createdAt = timeCurrentIso8601();
       const id = ID_PREFIX + createdAt;
+
       return {
         ...state,
-        todo: { ...todo, [id]: { ...action.item, id, createdAt } },
+        todo: {
+          ...todo,
+          [id]: {
+            ...action.item,
+            id,
+            status: false,
+            createdAt,
+          },
+        },
         status: 'create item',
       };
     }
-    case UPDATE_ITEM: {
-      return state;
+    case CHANGE_ITEM_STATUS: {
+      console.log('CHANGE_ITEM_STATUS', action.id);
+      const id = action.id;
+      const { [id]: item, ...todoList } = state.todo;
+
+      const todo = {
+        ...todoList,
+        [id]: {
+          ...item,
+          status: action.complete,
+          updatedAt: timeCurrentIso8601(),
+        },
+      };
+
+      return { ...state, todo, status: 'change item status' };
     }
     case DELETE_ITEM: {
       console.log('DELETE_ITEM', action.id);
@@ -34,6 +56,7 @@ export default (state = INITIAL_STATE, action) => {
       /* eslint-disable no-empty-pattern */
       const todo = (({ [deleteID]: { } = {}, ...data }) => data)(state.todo);
       /* eslint-enable no-empty-pattern */
+
       return { ...state, todo, status: 'delete item' };
     }
     case DELETE_ALL_ITEM: {
