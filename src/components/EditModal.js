@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useCallback } from 'react';
+import React, { useContext, useEffect, useCallback, useRef } from 'react';
 import EditContext from '../contexts/EditContext';
 import { RESET_EDIT } from '../actions/edit';
 
 export default function EditModal() {
   const { editItem, editDispatch } = useContext(EditContext);
+  const modalRef = useRef();
 
   const onCancel = useCallback(
     (e) => {
@@ -21,6 +22,10 @@ export default function EditModal() {
     const body = document.querySelector('body');
     body.classList.add('modal-open');
 
+    setTimeout(() => {
+      modalRef.current.classList.add('show');
+    }, 10);
+
     return () => {
       body.classList.remove('modal-open');
     };
@@ -32,7 +37,7 @@ export default function EditModal() {
 
   return (
     <>
-      <div className="modal show">
+      <div className="modal fade" ref={modalRef}>
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
