@@ -25,7 +25,7 @@ const TodoItem = ({ index, id, title, body, due, onChange, onDelete }) => {
   );
 };
 
-const DoneItem = ({ index, id, thumb, title, body, updatedAt, onChange }) => {
+const DoneItem = ({ index, id, title, body, updatedAt, onChange }) => {
   return (
     <tr>
       <td>
