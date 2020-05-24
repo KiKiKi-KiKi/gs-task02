@@ -12,22 +12,28 @@ export const INITIAL_STATE = {
   todo: {},
 };
 
-export default (state = INITIAL_STATE, actions) => {
-  switch (actions.type) {
+export default (state = INITIAL_STATE, action) => {
+  switch (action.type) {
     case CREATE_ITEM: {
+      console.log('CREATE_ITEM', action.item);
       const todo = state.todo;
       const createdAt = timeCurrentIso8601();
       const id = ID_PREFIX + createdAt;
       return {
         ...state,
-        todo: { ...todo, [id]: { ...actions.item, id, createdAt } },
+        todo: { ...todo, [id]: { ...action.item, id, createdAt } },
       };
     }
     case UPDATE_ITEM: {
       return state;
     }
     case DELETE_ITEM: {
-      return state;
+      console.log('DELETE_ITEM', action.id);
+      const deleteID = action.id;
+      /* eslint-disable no-empty-pattern */
+      const todo = (({ [deleteID]: { } = {}, ...data }) => data)(state.todo);
+      /* eslint-enable no-empty-pattern */
+      return { ...state, todo };
     }
     case DELETE_ALL_ITEM: {
       return { ...state, todo: {} };

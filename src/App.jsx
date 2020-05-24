@@ -3,6 +3,7 @@ import AppContext from './contexts/AppContext';
 import reducer, { INITIAL_STATE } from './reducers';
 import { saveLocalStorage, getLocalStorageData } from './storage';
 import AddItemForm from './components/AddItemForm';
+import ItemsList from './components/ItemsList';
 
 export default function App() {
   const savedState = getLocalStorageData();
@@ -19,6 +20,8 @@ export default function App() {
         <h1>TODO APP</h1>
         <AppContext.Provider value={{ state, dispatch }}>
           <div className="main">
+            <ItemsList />
+            <hr />
             <AddItemForm />
           </div>
         </AppContext.Provider>
