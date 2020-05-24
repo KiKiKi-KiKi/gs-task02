@@ -1,6 +1,8 @@
 import { timeCurrentIso8601, getToday, isPastDate } from '../utils';
 import {
   CREATE_ITEM,
+  UPDATE_ITEM,
+  UPDATE_EXPIRED_ITEM,
   DELETE_ITEM,
   DELETE_DONE_ITEMS,
   ITEM_COMPLETE,
@@ -38,6 +40,45 @@ export default (state = INITIAL_STATE, action) => {
           },
         },
         status: 'create item',
+      };
+    }
+    case UPDATE_ITEM: {
+      console.log(UPDATE_ITEM, action.item);
+      const id = action.item.id;
+      const item = state.todo[id];
+
+      return {
+        ...state,
+        todo: {
+          ...state.todo,
+          [id]: {
+            ...item,
+            ...action.item,
+            expired: false,
+            updatedAt: timeCurrentIso8601(),
+          },
+        },
+        status: 'update item',
+      };
+    }
+    case UPDATE_EXPIRED_ITEM: {
+      console.log(UPDATE_EXPIRED_ITEM, action.item);
+      const id = action.item.id;
+      const { [id]: item, ...expired } = state.expired;
+
+      return {
+        ...state,
+        todo: {
+          ...state.todo,
+          [id]: {
+            ...item,
+            ...action.item,
+            expired: false,
+            updatedAt: timeCurrentIso8601(),
+          },
+        },
+        expired,
+        status: 'update item',
       };
     }
     case ITEM_COMPLETE: {
