@@ -9,6 +9,7 @@ import {
 import ClearStorageButton from './components/ClearStorageButton';
 import AddItemForm from './components/AddItemForm';
 import ItemsList from './components/ItemsList';
+import DoneItemList from './components/DoneItemList';
 
 export default function App() {
   const savedState = getLocalStorageData();
@@ -20,10 +21,12 @@ export default function App() {
       clearLocalStorageData();
     } else {
       console.log('SAVE to Storage');
-      const { todo } = state;
-      saveLocalStorage({ todo });
+      const { todo, done } = state;
+      saveLocalStorage({ todo, done });
     }
   }, [state]);
+
+  console.log(state);
 
   return (
     <>
@@ -39,6 +42,9 @@ export default function App() {
             <ItemsList />
             <hr />
             <AddItemForm />
+            <hr />
+            <h3>COMPLETED</h3>
+            <DoneItemList />
           </div>
         </AppContext.Provider>
       </div>

@@ -5,7 +5,8 @@ import AppContext from '../contexts/AppContext';
 export default function ClearStorageButton() {
   const { state, dispatch } = useContext(AppContext);
 
-  const hasItem = Object.keys(state.todo).length;
+  const hasItem =
+    Object.keys(state.todo).length || Object.keys(state.done).length;
 
   const onClearAllData = useCallback(() => {
     if (!window.confirm('Really delete all storage data?')) {

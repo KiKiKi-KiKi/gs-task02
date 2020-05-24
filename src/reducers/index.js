@@ -1,8 +1,9 @@
 import { timeCurrentIso8601 } from '../utils';
 import {
   CREATE_ITEM,
-  CHANGE_ITEM_STATUS,
   DELETE_ITEM,
+  ITEM_COMPLETE,
+  ITEM_INCOMPLETE,
   DELETE_ALL_ITEM,
 } from '../actions';
 
@@ -10,6 +11,7 @@ const ID_PREFIX = 'TODO-';
 
 export const INITIAL_STATE = {
   todo: {},
+  done: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -34,34 +36,55 @@ export default (state = INITIAL_STATE, action) => {
         status: 'create item',
       };
     }
-    case CHANGE_ITEM_STATUS: {
-      console.log('CHANGE_ITEM_STATUS', action.id);
+    case ITEM_COMPLETE: {
+      console.log('ITEM_COMPLETE', action.id);
       const id = action.id;
-      const { [id]: item, ...todoList } = state.todo;
+      const { [id]: item, ...todo } = state.todo;
+      const done = state.done;
 
-      const todo = {
-        ...todoList,
-        [id]: {
-          ...item,
-          status: action.complete,
-          updatedAt: timeCurrentIso8601(),
+      return {
+        ...state,
+        todo,
+        done: {
+          ...done,
+          [id]: {
+            ...item,
+            status: action.complete,
+            updatedAt: timeCurrentIso8601(),
+          },
         },
+        status: 'item compoete',
       };
-
-      return { ...state, todo, status: 'change item status' };
+    }
+    case ITEM_INCOMPLETE: {
+      console.log('ITEM_COMPLETE', action.id);
+      const { [action.id]: item, ...done } = state.done;
+      return {
+        ...state,
+        todo: {
+          ...state.todo,
+          [item.id]: {
+            ...item,
+            status: action.complete,
+            updatedAt: timeCurrentIso8601(),
+          },
+        },
+        done,
+        status: 'item incomplete',
+      };
     }
     case DELETE_ITEM: {
       console.log('DELETE_ITEM', action.id);
       const deleteID = action.id;
       /* eslint-disable no-empty-pattern */
-      const todo = (({ [deleteID]: { } = {}, ...data }) => data)(state.todo);
+      const todo = (({ [deleteID]: {} = {}, ...data }) => data)(state.todo);
       /* eslint-enable no-empty-pattern */
 
       return { ...state, todo, status: 'delete item' };
     }
     case DELETE_ALL_ITEM: {
       console.log('DELETE_ALL_ITEM');
-      return { ...state, todo: {}, status: 'destroy' };
+      return { ...INITIAL_STATE, status: 'destroy' };
     }
     default: {
       return state;

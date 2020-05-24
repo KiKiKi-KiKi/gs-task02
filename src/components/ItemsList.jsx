@@ -1,6 +1,6 @@
 import React, { useContext, useCallback } from 'react';
 import AppContext from '../contexts/AppContext';
-import { CHANGE_ITEM_STATUS, DELETE_ITEM } from '../actions';
+import { ITEM_COMPLETE, DELETE_ITEM } from '../actions';
 import Item from './Item';
 
 export default function ItemsList() {
@@ -24,8 +24,7 @@ export default function ItemsList() {
   const onChangeStateus = useCallback(
     ({ id, status }) => (e) => {
       e.preventDefault();
-
-      dispatch({ type: CHANGE_ITEM_STATUS, id, complete: !status });
+      dispatch({ type: ITEM_COMPLETE, id, complete: !status });
     },
     [dispatch],
   );
