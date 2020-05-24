@@ -13,6 +13,7 @@ const ID_PREFIX = 'TODO-';
 export const INITIAL_STATE = {
   todo: {},
   done: {},
+  expired: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
