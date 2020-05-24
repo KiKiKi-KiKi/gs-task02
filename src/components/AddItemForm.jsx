@@ -1,11 +1,14 @@
 import React, { useState, useCallback, useEffect, useContext } from 'react';
 import AppContext from '../contexts/AppContext';
 import { CREATE_ITEM } from '../actions';
+import { getToday, isPastDate } from '../utils';
 
 export default function AddItemForm() {
+  const today = getToday();
   const { dispatch } = useContext(AppContext);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [due, setDue] = useState(today);
   const [disabled, setDisabled] = useState(true);
 
   const onValidate = useCallback((title) => {
@@ -20,14 +23,29 @@ export default function AddItemForm() {
     [],
   );
 
+  const onChangeLimit = useCallback(
+    (today) => (e) => {
+      e.preventDefault();
+      const dueDate = e.target.value;
+      const pastDate = isPastDate(today)(dueDate);
+      if (pastDate) {
+        alert('Please select today or futuer date!');
+        return;
+      }
+      setDue(dueDate);
+    },
+    [],
+  );
+
   const resetForm = useCallback(() => {
     setTitle('');
     setBody('');
-  }, []);
+    setDue(today);
+  }, [today]);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch({ type: CREATE_ITEM, item: { title, body } });
+    dispatch({ type: CREATE_ITEM, item: { title, body, due } });
     resetForm();
   };
 
@@ -37,6 +55,17 @@ export default function AddItemForm() {
 
   return (
     <form>
+      <div className="form-group">
+        <label htmlFor="todo-due">Time limit</label>
+        <div className="d-inline ml-2">
+          <input
+            type="date"
+            id="todo-due"
+            value={due}
+            onChange={onChangeLimit(today)}
+          />
+        </div>
+      </div>
       <div className="form-group">
         <label htmlFor="todo-title">Title</label>
         <input

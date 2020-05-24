@@ -49,7 +49,7 @@ export default function ItemsList() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Thumb</th>
+            <th>Due</th>
             <th>Title</th>
             <th>{/* actions */}</th>
           </tr>

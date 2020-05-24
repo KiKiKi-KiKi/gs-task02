@@ -31,7 +31,7 @@ export default function DoneItemList() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Thumb</th>
+            <th>Done</th>
             <th>Title</th>
             <th>{/* actions */}</th>
           </tr>

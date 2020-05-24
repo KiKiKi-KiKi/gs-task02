@@ -1,13 +1,14 @@
 import React from 'react';
+import { formatDate } from '../utils';
 
-const TodoItem = ({ index, id, thumb, title, body, onChange, onDelete }) => {
+const TodoItem = ({ index, id, title, body, due, onChange, onDelete }) => {
   return (
     <tr>
       <td>
         {index}
         <span className="d-none">{id}</span>
       </td>
-      <td>{thumb}</td>
+      <td>{due}</td>
       <td>
         <b className="todo-title">{title}</b>
         <div className="toto-body">{body}</div>
@@ -24,14 +25,14 @@ const TodoItem = ({ index, id, thumb, title, body, onChange, onDelete }) => {
   );
 };
 
-const DoneItem = ({ index, id, thumb, title, body, onChange }) => {
+const DoneItem = ({ index, id, thumb, title, body, updatedAt, onChange }) => {
   return (
     <tr>
       <td>
         {index}
         <span className="d-none">{id}</span>
       </td>
-      <td>{thumb}</td>
+      <td>{formatDate(updatedAt, 'YYYY-MM-DD hh:mm:ss')}</td>
       <td>
         <b className="todo-title">{title}</b>
         <div className="toto-body">{body}</div>
