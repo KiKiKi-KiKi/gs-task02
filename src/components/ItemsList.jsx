@@ -6,6 +6,8 @@ import {
   EXPORED_ITEM_COMPLETE,
   DELET_EXPIRED_ITEM,
 } from '../actions';
+import EditContext from '../contexts/EditContext';
+import { SET_EDIT_ITEM } from '../actions/edit';
 import Item from './Item';
 
 export default function ItemsList() {
@@ -13,6 +15,8 @@ export default function ItemsList() {
     state: { todo, expired },
     dispatch,
   } = useContext(AppContext);
+
+  const { editDispatch } = useContext(EditContext);
 
   const onDelete = useCallback(
     ({ index, id, title, expired }) => {
@@ -40,37 +44,41 @@ export default function ItemsList() {
     [dispatch],
   );
 
+  const onEditItem = useCallback(
+    (item) => (e) => {
+      e.preventDefault();
+      editDispatch({ type: SET_EDIT_ITEM, item });
+    },
+    [editDispatch],
+  );
+
+  const createList = useCallback(
+    (listObj) => {
+      return Object.keys(listObj).map((id, i) => {
+        const item = listObj[id];
+        const index = i + 1;
+        return (
+          <Item
+            key={id}
+            index={index}
+            onChange={onChangeStateus(item)}
+            onDelete={onDelete({ index, ...item })}
+            onEdit={onEditItem(item)}
+            {...item}
+          />
+        );
+      });
+    },
+    [onChangeStateus, onDelete, onEditItem],
+  );
+
   const todoList = useMemo(() => {
-    return Object.keys(todo).map((id, i) => {
-      const item = todo[id];
-      const index = i + 1;
-      return (
-        <Item
-          key={id}
-          index={index}
-          onChange={onChangeStateus(item)}
-          onDelete={onDelete({ index, ...item })}
-          {...item}
-        />
-      );
-    });
-  }, [todo, onChangeStateus, onDelete]);
+    return createList(todo);
+  }, [todo, createList]);
 
   const expiredList = useMemo(() => {
-    return Object.keys(expired).map((id, i) => {
-      const item = expired[id];
-      const index = i + 1;
-      return (
-        <Item
-          key={id}
-          index={index}
-          onChange={onChangeStateus(item)}
-          onDelete={onDelete({ index, ...item })}
-          {...item}
-        />
-      );
-    });
-  }, [expired, onChangeStateus, onDelete]);
+    return createList(expired);
+  }, [expired, createList]);
 
   return (
     <>

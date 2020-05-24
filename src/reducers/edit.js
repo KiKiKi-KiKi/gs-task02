@@ -1,6 +1,6 @@
 import { SET_EDIT_ITEM, RESET_EDIT } from '../actions/edit';
 
-const DEFAULT_STATE = null;
+export const DEFAULT_STATE = null;
 
 const reducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {

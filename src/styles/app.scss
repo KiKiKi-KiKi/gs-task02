@@ -1,0 +1,14 @@
+.modal-open {
+  .modal {
+    display: block;
+  }
+}
+
+.modal {
+  .modal-dialog {
+    z-index: 1;
+  }
+  .modal-backdrop {
+    z-index: 0;
+  }
+}

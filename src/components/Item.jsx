@@ -9,6 +9,7 @@ const TodoItem = ({
   due,
   expired,
   onChange,
+  onEdit,
   onDelete,
 }) => {
   return (
@@ -19,8 +20,10 @@ const TodoItem = ({
       </td>
       <td className={expired ? 'text-danger' : ''}>{due}</td>
       <td>
-        <b className="todo-title">{title}</b>
-        <div className="toto-body">{body}</div>
+        <a href="#" onClick={onEdit}>
+          <b className="todo-title">{title}</b>
+          <div className="toto-body">{body}</div>
+        </a>
       </td>
       <td>
         <button className="btn btn-success btn-sm" onClick={onChange}>

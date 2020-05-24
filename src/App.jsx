@@ -9,7 +9,7 @@ import {
 import { isPastDate, getToday } from './utils';
 import ClearStorageButton from './components/ClearStorageButton';
 import AddItemForm from './components/AddItemForm';
-import ItemsList from './components/ItemsList';
+import TodoList from './components/TodoList';
 import DoneItemList from './components/DoneItemList';
 import DeleteDoneItemsButton from './components/DeleteDoneItemsButton';
 
@@ -77,7 +77,7 @@ export default function App() {
             </div>
           </header>
           <div className="main">
-            <ItemsList />
+            <TodoList />
             <hr />
             <AddItemForm />
             <hr />

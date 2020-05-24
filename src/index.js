@@ -4,6 +4,7 @@ import App from './App';
 import AddSampleData from './AddSampleData';
 import 'normalize.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/app.scss';
 
 ReactDOM.render(
   <React.StrictMode>
